@@ -1,6 +1,5 @@
-﻿const { createClient } = require('@supabase/supabase-js')
-const SUPABASE_URL = process.env.SUPABASE_URL
-const SUPABASE_KEY = process.env.SUPABASE_KEY
+﻿const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY;
 
 const DEFAULT_MODES = ['Overall', 'Vanilla', 'UHC', 'Pot', 'NethOP', 'SMP', 'Sword', 'Axe', 'Mace', 'Diamond SMP', 'Spear Mace', 'Minecart', 'Speed', 'Creeper'];
 const MODE_ORDER = ['Overall', 'Vanilla', 'UHC', 'Pot', 'NethOP', 'SMP', 'Sword', 'Axe', 'Mace', 'Diamond SMP', 'Spear Mace', 'Minecart', 'Speed', 'Creeper'];
