@@ -561,7 +561,6 @@ main {
   .navbar {
     max-width: 100%;
     flex-direction: column;
-    align-items: stretch;
     justify-content: center;
     gap: 0.75rem;
     padding: 1rem 1rem;
@@ -852,7 +851,6 @@ footer {
 @media (max-width: 760px) {
   .navbar {
     flex-direction: column;
-    align-items: stretch;
   }
 
   .nav-links {
