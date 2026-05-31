@@ -1,7 +1,4 @@
-﻿const SUPABASE_URL = window.SUPABASE_URL;
-const SUPABASE_KEY = window.SUPABASE_KEY;
-
-const DEFAULT_MODES = ['Overall', 'Vanilla', 'UHC', 'Pot', 'NethOP', 'SMP', 'Sword', 'Axe', 'Mace', 'Diamond SMP', 'Spear Mace', 'Minecart', 'Speed', 'Creeper'];
+﻿const DEFAULT_MODES = ['Overall', 'Vanilla', 'UHC', 'Pot', 'NethOP', 'SMP', 'Sword', 'Axe', 'Mace', 'Diamond SMP', 'Spear Mace', 'Minecart', 'Speed', 'Creeper'];
 const MODE_ORDER = ['Overall', 'Vanilla', 'UHC', 'Pot', 'NethOP', 'SMP', 'Sword', 'Axe', 'Mace', 'Diamond SMP', 'Spear Mace', 'Minecart', 'Speed', 'Creeper'];
 const BOARD_TIERS = ['Tier 1', 'Tier 2', 'Tier 3', 'Tier 4', 'Tier 5'];
 const TIER_PRIORITY = ['Unranked', 'LT5', 'HT5', 'LT4', 'HT4', 'LT3', 'HT3', 'LT2', 'HT2', 'LT1', 'HT1'];
@@ -391,14 +388,10 @@ function setupModeTabs(players) {
 }
 
 async function fetchPlayers() {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/players?select=*`, {
-    headers: {
-      apikey: SUPABASE_KEY,
-      Authorization: `Bearer ${SUPABASE_KEY}`,
-      Accept: 'application/json',
-    },
-  });
+  const res = await fetch('/api/players');
+
   if (!res.ok) throw new Error('Failed to load players');
+
   return res.json();
 }
 

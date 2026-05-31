@@ -21,6 +21,13 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+app.get('/config.js', (req, res) => {
+  res.type('application/javascript');
+  res.send(`
+    window.SUPABASE_URL = "${process.env.SUPABASE_URL}";
+    window.SUPABASE_KEY = "${process.env.SUPABASE_KEY}";
+  `);
+});
 /**
  * Serve frontend files
  */
