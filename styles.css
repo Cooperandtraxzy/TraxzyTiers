@@ -268,7 +268,6 @@ main {
 .tier-column {
   min-width: 220px;
   flex: 1 1 220px;
-  max-width: 300px;
   background: #090a11;
   border: 1px solid #1e2233;
   border-radius: 18px;
@@ -423,35 +422,42 @@ main {
   font-size: 1.8rem;
 }
 
-.tier-icon[data-tooltip]::after {
-  /* replaced by floating tooltip for proper stacking */
-  display: none;
+.tier-icon-label {
   position: absolute;
-  bottom: calc(100% + 10px);
   left: 50%;
-  transform: translateX(-50%) translateY(6px);
-  white-space: nowrap;
-  padding: 0.45rem 0.75rem;
-  border-radius: 12px;
-  background: rgba(8, 11, 24, 0.96);
-  color: #eef2ff;
-  font-size: 0.88rem;
-  opacity: 0;
+  transform: translateX(-50%);
+  bottom: 4px;
+  background: linear-gradient(90deg,var(--accent),var(--accent-2));
+  color: #0b0710;
+  font-weight: 800;
+  font-size: 0.62rem;
+  padding: 3px 6px;
+  border-radius: 8px;
+  line-height: 1;
   pointer-events: none;
-  transition: opacity 160ms ease, transform 160ms ease;
-  z-index: 2;
 }
 
-.tier-icon[data-tooltip]:hover::after {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
+.modal-tier-pill { display: inline-block; }
+.modal-tier-icon { width: 44px; height: 44px; border-radius: 10px; font-size: 1.1rem; }
+.modal-tier-icon .tier-icon-img { width: 22px; height: 22px; }
+
+/* Icons use default positioning (no vertical nudge) */
+
+/* removed custom tooltip pseudo-elements to use native hover or no tooltip */
 
 .tier-icon-img {
   width: 28px;
   height: 28px;
   object-fit: contain;
   border-radius: 8px;
+}
+
+/* Move the image inside the tier icon slightly up in card/ranking contexts only */
+.tier-column .tier-icon .tier-icon-img,
+.tier-player .tier-icon .tier-icon-img,
+.ranking-tiers .tier-icon .tier-icon-img {
+  transform: translateY(-6px);
+  transition: transform 120ms ease;
 }
 
 .overall-ranking {
@@ -461,7 +467,7 @@ main {
 
 .ranking-row {
   display: grid;
-  grid-template-columns: minmax(56px, auto) minmax(260px, 1fr) minmax(220px, 1fr) minmax(100px, auto);
+  grid-template-columns: minmax(56px, auto) minmax(260px, 1fr) minmax(90px, auto) minmax(220px, 1fr) minmax(100px, auto);
   gap: 1rem;
   align-items: center;
   background: #0d1120;
@@ -487,6 +493,15 @@ main {
   font-size: 1rem;
 }
 
+.ranking-points {
+  font-weight: 800;
+  color: var(--accent-light);
+  text-align: center;
+  background: rgba(150,80,200,0.06);
+  padding: 0.5rem 0.6rem;
+  border-radius: 8px;
+}
+
 .player-category {
   display: flex;
   align-items: center;
@@ -508,11 +523,13 @@ main {
 }
 
 .ranking-region {
-  color: var(--muted);
+  font-weight: 800;
+  color: var(--accent-light);
+  text-align: center;
   text-transform: uppercase;
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: right;
+  background: rgba(150,80,200,0.06);
+  padding: 0.5rem 0.6rem;
+  border-radius: 8px;
 }
 
 .no-players {
@@ -528,21 +545,7 @@ main {
 }
 
 /* Floating tooltip used for tier icons to ensure it's always on top */
-.floating-tooltip {
-  position: fixed;
-  z-index: 999999;
-  padding: 0.45rem 0.75rem;
-  border-radius: 10px;
-  background: linear-gradient(90deg,var(--accent),var(--accent-2));
-  color: #0b0710;
-  font-weight: 700;
-  font-size: 0.85rem;
-  pointer-events: none;
-  transform: translate(-50%,-100%) scale(0.98);
-  opacity: 0;
-  transition: opacity 120ms ease, transform 120ms ease;
-}
-.floating-tooltip.show { opacity: 1; transform: translate(-50%,-110%) scale(1); }
+/* floating tooltip removed */
 
 /* Loader */
 .loader {
@@ -561,6 +564,7 @@ main {
   .navbar {
     max-width: 100%;
     flex-direction: column;
+    align-items: stretch;
     justify-content: center;
     gap: 0.75rem;
     padding: 1rem 1rem;
@@ -612,7 +616,6 @@ main {
   .tier-column {
     min-width: 180px;
     flex: 1 1 180px;
-    max-width: 240px;
   }
   .tier-column-body {
     height: 280px;
@@ -851,6 +854,7 @@ footer {
 @media (max-width: 760px) {
   .navbar {
     flex-direction: column;
+    align-items: stretch;
   }
 
   .nav-links {

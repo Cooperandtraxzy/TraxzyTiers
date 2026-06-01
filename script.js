@@ -214,7 +214,10 @@ function renderTierBoard(players, selectedMode) {
               : getTierArrowIcon(tierValue);
 
             return `
-              <span class="tier-icon" data-tooltip="${tierValue}">${iconContent}</span>
+              <span class="tier-icon" data-tooltip="${tierValue}">
+                ${iconContent}
+                <span class="tier-icon-label">${tierValue}</span>
+              </span>
             `;
           }).join('');
 
@@ -233,6 +236,7 @@ function renderTierBoard(players, selectedMode) {
                   </div>
                 </div>
               </div>
+              <div class="ranking-points" title="Total points">${totalPoints} pts</div>
               <div class="ranking-tiers">${tiersHtml}</div>
               <div class="ranking-region">${region}</div>
             </article>
@@ -417,46 +421,4 @@ async function init() {
 init();
 
 /* Floating tooltip handlers for `.tier-icon[data-tooltip]` to ensure tooltips render above all layers */
-let _floatingTooltip = null;
-let _tooltipTarget = null;
-
-function showFloatingTooltip(target) {
-  const text = target.dataset.tooltip;
-  if (!text) return;
-  hideFloatingTooltip();
-  _tooltipTarget = target;
-  const el = document.createElement('div');
-  el.className = 'floating-tooltip';
-  el.textContent = text;
-  document.body.appendChild(el);
-  const rect = target.getBoundingClientRect();
-  el.style.left = (rect.left + rect.width / 2) + 'px';
-  el.style.top = (rect.top - 8) + 'px';
-  requestAnimationFrame(() => el.classList.add('show'));
-  _floatingTooltip = el;
-}
-
-function moveFloatingTooltip() {
-  if (!_floatingTooltip || !_tooltipTarget) return;
-  const rect = _tooltipTarget.getBoundingClientRect();
-  _floatingTooltip.style.left = (rect.left + rect.width / 2) + 'px';
-  _floatingTooltip.style.top = (rect.top - 8) + 'px';
-}
-
-function hideFloatingTooltip() {
-  if (_floatingTooltip) {
-    _floatingTooltip.remove();
-    _floatingTooltip = null;
-    _tooltipTarget = null;
-  }
-}
-
-document.addEventListener('mouseover', (e) => {
-  const t = e.target.closest && e.target.closest('.tier-icon[data-tooltip]');
-  if (t) showFloatingTooltip(t);
-});
-document.addEventListener('mouseout', (e) => {
-  const t = e.target.closest && e.target.closest('.tier-icon[data-tooltip]');
-  if (t) hideFloatingTooltip();
-});
-document.addEventListener('mousemove', moveFloatingTooltip);
+// Removed custom floating tooltip behavior to use native hover or no tooltip

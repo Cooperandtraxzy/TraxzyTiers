@@ -1,5 +1,7 @@
 const path = require('path');
+require('dotenv').config();
 const express = require('express');
+const ws = require('ws');
 const { createClient } = require('@supabase/supabase-js');
 
 const app = express();
@@ -19,13 +21,23 @@ if (!supabaseUrl || !supabaseKey) {
   process.exit(1);
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(supabaseUrl, supabaseKey, { realtime: { transport: ws } });
 
 app.get('/config.js', (req, res) => {
   res.type('application/javascript');
   res.send(`
     window.SUPABASE_URL = "${process.env.SUPABASE_URL}";
     window.SUPABASE_KEY = "${process.env.SUPABASE_KEY}";
+  `);
+});
+// Mirror Vercel-style endpoint for local testing
+app.get('/api/config.js', (req, res) => {
+  res.type('application/javascript');
+  // Expose only the anonymous/public key to the client. Do NOT expose service_role keys.
+  const clientKey = process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_KEY || '';
+  res.send(`
+    window.SUPABASE_URL = "${process.env.SUPABASE_URL}";
+    window.SUPABASE_KEY = "${clientKey}";
   `);
 });
 /**
